@@ -1,173 +1,19 @@
-<%@ taglib prefix="html" uri="http://struts.apache.org/tags-html" %>
-<%@ taglib prefix="bean" uri="http://struts.apache.org/tags-bean" %>
-<%@ taglib prefix="logic" uri="http://struts.apache.org/tags-logic" %>
-
-<html>
-<head>
-  <title>Exclusion Page</title>
-  <style>
-    table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    th, td {
-      padding: 8px;
-      text-align: left;
-      border-bottom: 1px solid #ddd;
-    }
-
-    th {
-      background-color: #f2f2f2;
-    }
-
-    input[type="text"], input[type="submit"] {
-      padding: 6px;
-    }
-  </style>
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-  <script>
-    // AJAX request code here
+<script>
+    $(document).ready(function() {
+      $('#securityId').on('change', function() {
+        var securityId = $(this).val();
+        $.ajax({
+          url: 'securityLookup.do',
+          method: 'POST',
+          data: { securityId: securityId },
+          success: function(response) {
+            $('#securityName').val(response.securityName);
+            $('#securityId').val(response.securityId);
+          },
+          error: function() {
+            alert('Error retrieving security information');
+          }
+        });
+      });
+    });
   </script>
-</head>
-<body>
-  <html:form action="/exclusionAction">
-    <table>
-      <tr>
-        <th>Exclusion Type:</th>
-        <td><html:text property="exclusionType" /></td>
-      </tr>
-      <tr>
-        <th>Security ID:</th>
-        <td><html:text property="securityId" id="securityId" /></td>
-      </tr>
-      <tr>
-        <th>Security Name:</th>
-        <td><html:text property="securityName" id="securityName" /></td>
-      </tr>
-      <tr>
-        <th>Exclusion Types:</th>
-        <td>
-          <logic:notEmpty name="exclusionForm" property="exclusionTypes">
-            <logic:iterate name="exclusionForm" property="exclusionTypes" id="exclusion" indexId="idx">
-              <html:checkbox property="exclusionTypes" value="<bean:write name='exclusion' />" />
-              <bean:write name="exclusion" />
-              <br />
-            </logic:iterate>
-          </logic:notEmpty>
-        </td>
-      </tr>
-      <tr>
-        <td></td>
-        <td>
-          <html:submit property="save" value="Save" />
-          <html:submit property="delete" value="Delete" />
-          <html:submit property="update" value="Update" />
-        </td>
-      </tr>
-    </table>
-  </html:form>
-</body>
-</html>
-
-
-
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
-public class ExclusionAction extends Action {
-  
-  public ActionForward execute(ActionMapping mapping, ActionForm form,
-                               HttpServletRequest request, HttpServletResponse response) {
-    ExclusionForm exclusionForm = (ExclusionForm) form;
-    String exclusionType = exclusionForm.getExclusionType();
-    String securityId = exclusionForm.getSecurityId();
-    String[] exclusionTypes = exclusionForm.getExclusionTypes();
-
-    // Perform the required actions based on the form data
-    if (request.getParameter("save") != null) {
-      // Save the new record based on the form data
-      
-    } else if (request.getParameter("delete") != null) {
-      // Delete the existing record based on the form data
-      
-    } else if (request.getParameter("update") != null) {
-      // Update the existing record based on the form data
-      
-    }
-
-    // Return the appropriate ActionForward
-    return mapping.findForward("success");
-  }
-}
-
-
-
-import org.apache.struts.action.ActionForm;
-
-public class ExclusionForm extends ActionForm {
-  private String exclusionType;
-  private String securityId;
-  private String securityName;
-  private String[] exclusionTypes;
-
-  // Getter and setter methods for the fields
-
-  public void reset(ActionMapping mapping, HttpServletRequest request) {
-    // Reset form data if needed
-  }
-}
-
-
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
-import org.apache.struts.action.Action;
-import org.apache.struts.action.ActionForm;
-import org.apache.struts.action.ActionForward;
-import org.apache.struts.action.ActionMapping;
-
-public class SecurityLookupAction extends Action {
-
-  public ActionForward execute(ActionMapping mapping, ActionForm form,
-                               HttpServletRequest request, HttpServletResponse response) {
-    String securityId = request.getParameter("securityId");
-    // Perform database lookup based on the securityId and retrieve the security name and ID
-    String securityName = ""; // Retrieve the security name from the database
-    String securityIdFromDB = ""; // Retrieve the security ID from the database
-
-    // Create a JSON response object
-    JSONObject jsonResponse = new JSONObject();
-    jsonResponse.put("securityName", securityName);
-    jsonResponse.put("securityId", securityIdFromDB);
-
-    // Set the response type and write the JSON response
-    response.setContentType("application/json");
-    response.setCharacterEncoding("UTF-8");
-    response.getWriter().write(jsonResponse.toString());
-
-    return null;
-  }
-}
-
-
-
-<form-beans>
-    <form-bean name="exclusionForm" type="com.example.ExclusionForm" />
-  </form-beans>
-
-  <action-mappings>
-    <action path="/exclusionAction" type="com.example.ExclusionAction" name="exclusionForm" scope="request" validate="true">
-      <forward name="success" path="/exclusion.jsp" />
-    </action>
-    <action path="/securityLookup" type="com.example.SecurityLookupAction" name="exclusionForm" parameter="securityId" scope="request" validate="false">
-      <forward name="success" path="/securityLookup.jsp" />
-    </action>
-  </action-mappings>
