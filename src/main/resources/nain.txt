@@ -11,7 +11,7 @@
     .container {
       display: grid;
       grid-template-rows: 100px 1fr 60px;
-      grid-template-columns: 1fr 1fr;
+      grid-template-columns: 200px 1fr;
       height: 100vh;
     }
 
@@ -32,20 +32,28 @@
       margin: 0 10px;
     }
 
+    .header .header-text {
+      flex-grow: 1;
+      text-align: center;
+    }
+
     .content {
       grid-row: 2;
       display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
     }
 
     .column {
-      flex-grow: 1;
       padding: 20px;
       border: 1px solid gray;
-      width: 300px;
-      max-width: 100%;
+    }
+
+    .column:first-child {
+      flex-basis: 200px;
+    }
+
+    .column:last-child {
+      grid-column: auto;
+      flex-grow: 1;
     }
 
     .footer {
@@ -56,21 +64,27 @@
       line-height: 60px;
     }
 
-    .login-form {
+    .input-form {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
       justify-content: center;
+      height: 100%;
     }
 
-    .login-form form {
+    .input-form form {
       display: flex;
       flex-direction: column;
-      align-items: center;
+      align-items: flex-start;
     }
 
-    .login-form input[type="text"],
-    .login-form input[type="password"] {
+    .input-form label {
+      margin-bottom: 10px;
+      padding-left: 10px;
+    }
+
+    .input-form input[type="text"],
+    .input-form input[type="password"] {
       margin-bottom: 10px;
       padding: 10px;
       width: 100%;
@@ -78,64 +92,65 @@
       border-radius: 4px;
     }
 
-    .login-form label {
-      margin-bottom: 10px;
+    .input-form label.checkbox-label {
+      display: flex;
+      align-items: center;
     }
 
-    .login-form input[type="submit"] {
+    .input-form input[type="checkbox"] {
+      margin-right: 5px;
+    }
+
+    .input-form .button-container {
+      display: flex;
+      justify-content: flex-start;
+      margin-top: 10px;
+    }
+
+    .input-form .button-container button {
       padding: 10px 20px;
       background-color: lightblue;
       color: white;
       border: none;
       border-radius: 4px;
       cursor: pointer;
-    }
-
-    .notification {
-      display: block;
-      align-items: center;
-      justify-content: space-between;
-      background-color: lightcoral;
-      color: white;
-      padding: 10px 20px;
-      margin-bottom: 10px;
-      width: 100%;
-    }
-
-    .notification .close-btn {
-      cursor: pointer;
+      margin-right: 10px;
     }
   </style>
-  <script>
-    function closeNotification() {
-      var notification = document.getElementById('notification');
-      notification.style.display = 'none';
-    }
-  </script>
 </head>
 <body>
   <div class="container">
     <div class="header">
       <div>
         <img class="icon" src="icon1.png" alt="Icon 1">
+        <span class="header-text">Test</span>
+      </div>
+      <div>
         <img class="icon" src="icon2.png" alt="Icon 2">
       </div>
-      <div>Update Details</div>
     </div>
     <div class="content">
       <div class="column">
-        <div id="notification" class="notification">
-          Login failed. Please try again.
-          <span class="close-btn" onclick="closeNotification()">X</span>
-        </div>
-        <div class="login-form">
+        Column 1
+      </div>
+      <div class="column">
+        <div class="input-form">
           <form>
             <label for="username">Username:</label>
             <input type="text" id="username" name="username" placeholder="Username">
             <label for="password">Password:</label>
             <input type="password" id="password" name="password" placeholder="Password">
-            <label><input type="checkbox" name="remember"> Remember me</label>
-            <input type="submit" value="Submit">
+            <label class="checkbox-label">
+              <input type="checkbox" name="remember"> Remember me
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" name="moreDetails"> Please click if you want more details before process
+            </label>
+            <div class="button-container">
+              <button type="submit">Save</button>
+              <button type="button">Update</button>
+              <button type="button">Delete</button>
+            </div>
           </form>
         </div>
       </div>
