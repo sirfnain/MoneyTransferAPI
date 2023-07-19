@@ -1,163 +1,171 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Grid-based Page</title>
-  <style>
-    html, body {
-      margin: 0;
-      padding: 0;
-    }
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
 
-    .container {
-      display: grid;
-      grid-template-rows: 100px 1fr 60px;
-      grid-template-columns: 200px 1fr;
-      height: 100vh;
-    }
+        .container {
+            display: grid;
+            grid-template-rows: 50px auto 50px;
+            grid-template-columns: 20% 80%;
+            min-height: 100vh;
+            padding: 10px; /* Added padding */
+        }
 
-    .header {
-      grid-row: 1;
-      grid-column: 1 / span 2;
-      background-color: lightblue;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 0 20px;
-      color: white;
-    }
+        .header {
+            grid-row: 1;
+            grid-column: 1 / span 2;
+            background-color: #f2f2f2;
+            text-align: center;
+            line-height: 50px;
+            overflow: hidden;
+        }
 
-    .header .icon {
-      width: 30px;
-      height: 30px;
-      margin: 0 10px;
-    }
+        .header h1 {
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            padding-right: 30px;
+        }
 
-    .header .header-text {
-      flex-grow: 1;
-      text-align: center;
-    }
+        .lookup-btn {
+            margin-left: 10px;
+            padding: 5px 10px;
+            background-color: #4CAF50;
+            color: #ffffff;
+            border: none;
+            cursor: pointer;
+        }
 
-    .content {
-      grid-row: 2;
-      display: flex;
-    }
+        .column1 {
+            grid-row: 2;
+            grid-column: 1;
+            background-color: #e6e6e6;
+            padding: 20px;
+        }
 
-    .column {
-      padding: 20px;
-      border: 1px solid gray;
-    }
+        .column2 {
+            grid-row: 2;
+            grid-column: 2;
+            background-color: #ffffff;
+            padding: 20px;
+        }
 
-    .column:first-child {
-      flex-basis: 200px;
-    }
+        .footer {
+            grid-row: 3;
+            grid-column: 1 / span 2;
+            background-color: #f2f2f2;
+            text-align: center;
+            line-height: 50px;
+        }
 
-    .column:last-child {
-      grid-column: auto;
-      flex-grow: 1;
-    }
+        .notification {
+            display: block;
+            background-color: #ffdddd;
+            color: #ff0000;
+            padding: 10px;
+            margin-bottom: 10px;
+            position: relative;
+        }
 
-    .footer {
-      grid-row: 3;
-      grid-column: 1 / span 2;
-      background-color: lightgray;
-      text-align: center;
-      line-height: 60px;
-    }
+        .notification .close-btn {
+            position: absolute;
+            top: 5px;
+            right: 5px;
+            cursor: pointer;
+            font-weight: bold;
+        }
 
-    .input-form {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-      justify-content: center;
-      height: 100%;
-    }
+        .form-group {
+            margin-bottom: 10px;
+        }
 
-    .input-form form {
-      display: flex;
-      flex-direction: column;
-      align-items: flex-start;
-    }
+        .form-group label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
 
-    .input-form label {
-      margin-bottom: 10px;
-      padding-left: 10px;
-    }
+        .form-group input {
+            width: 90%;
+            padding: 5px;
+        }
 
-    .input-form input[type="text"],
-    .input-form input[type="password"] {
-      margin-bottom: 10px;
-      padding: 10px;
-      width: 100%;
-      border: 1px solid #ccc;
-      border-radius: 4px;
-    }
-
-    .input-form label.checkbox-label {
-      display: flex;
-      align-items: center;
-    }
-
-    .input-form input[type="checkbox"] {
-      margin-right: 5px;
-    }
-
-    .input-form .button-container {
-      display: flex;
-      justify-content: flex-start;
-      margin-top: 10px;
-    }
-
-    .input-form .button-container button {
-      padding: 10px 20px;
-      background-color: lightblue;
-      color: white;
-      border: none;
-      border-radius: 4px;
-      cursor: pointer;
-      margin-right: 10px;
-    }
-  </style>
+        .btn {
+            background-color: #4CAF50;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <div class="header">
-      <div>
-        <img class="icon" src="icon1.png" alt="Icon 1">
-        <span class="header-text">Test</span>
-      </div>
-      <div>
-        <img class="icon" src="icon2.png" alt="Icon 2">
-      </div>
-    </div>
-    <div class="content">
-      <div class="column">
-        Column 1
-      </div>
-      <div class="column">
-        <div class="input-form">
-          <form>
-            <label for="username">Username:</label>
-            <input type="text" id="username" name="username" placeholder="Username">
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" placeholder="Password">
-            <label class="checkbox-label">
-              <input type="checkbox" name="remember"> Remember me
-            </label>
-            <label class="checkbox-label">
-              <input type="checkbox" name="moreDetails"> Please click if you want more details before process
-            </label>
-            <div class="button-container">
-              <button type="submit">Save</button>
-              <button type="button">Update</button>
-              <button type="button">Delete</button>
-            </div>
-          </form>
+    <div class="container">
+        <div class="header">
+            <h1>Header Text That Is Quite Long</h1>
         </div>
-      </div>
+        <div class="column1">
+            <h2>Column 1</h2>
+            <!-- Add content for column 1 here -->
+        </div>
+        <div class="column2">
+            <h2>Column 2 - Signup</h2>
+            <div class="notification" id="error-notification">
+                <span class="close-btn" onclick="hideErrorNotification()">&times;</span>
+            </div>
+            <form id="signup-form">
+                <div class="form-group">
+                    <label for="username">Username:</label>
+                    <input type="text" id="username" name="username" required>
+                    <button type="button" class="lookup-btn">Lookup</button>
+                </div>
+                <div class="form-group">
+                    <label for="password">Password:</label>
+                    <input type="password" id="password" name="password" required>
+                </div>
+                <div class="form-group">
+                    <label for="confirm-password">Confirm Password:</label>
+                    <input type="password" id="confirm-password" name="confirm-password" required>
+                </div>
+                <button type="submit" class="btn">Sign Up</button>
+            </form>
+        </div>
+        <div class="footer">
+            <h3>Footer</h3>
+        </div>
     </div>
-    <div class="footer">
-      Footer
-    </div>
-  </div>
+
+    <script>
+        // JavaScript code for handling form submission and displaying notification
+        document.getElementById('signup-form').addEventListener('submit', function(event) {
+            event.preventDefault(); // Prevent form submission
+
+            var password = document.getElementById('password').value;
+            var confirmPassword = document.getElementById('confirm-password').value;
+
+            if (password !== confirmPassword) {
+                showErrorNotification('Passwords do not match!');
+            } else {
+                // Submit the form or perform other actions
+                alert('Sign up successful!');
+            }
+        });
+
+        function showErrorNotification(message) {
+            var errorNotification = document.getElementById('error-notification');
+            errorNotification.innerHTML = '<span class="close-btn" onclick="hideErrorNotification()">&times;</span>' + message;
+            errorNotification.style.display = 'block';
+        }
+
+        function hideErrorNotification() {
+            var errorNotification = document.getElementById('error-notification');
+            errorNotification.style.display = 'none';
+        }
+    </script>
 </body>
 </html>
